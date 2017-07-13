@@ -14,6 +14,7 @@ function nextTodoId() {
 }
 
 function createTodo(title) {
+
   var checkboxId = "todo-" + nextTodoId();
 
   var label = $('<label></label>')
@@ -30,7 +31,20 @@ function createTodo(title) {
 
   $("#todoList").append( tableRow );
 
+
   updateCounters();
+
+  var newTodo = { title: title, completed: false };
+
+  $.ajax({
+    type: "POST",
+    url: '/todos.json',
+    data: JSON.stringify({
+      todo: newTodo
+    }),
+    contentType: "application/json",
+    dataType: "json"
+  });
 }
 
 function submitTodo(event) {
